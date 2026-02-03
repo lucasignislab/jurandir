@@ -1,6 +1,8 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portal Jurandir - Marido de Aluguel
 
-## Getting Started
+Este é o projeto **Portal Jurandir**, um marketplace de serviços domésticos (Marido de Aluguel).
+
+## Primeiros Passos
 
 First, run the development server:
 

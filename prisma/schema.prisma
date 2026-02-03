@@ -1,0 +1,283 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Core Users
+model User {
+  id            String    @id @default(uuid()) @db.Uuid
+  email         String    @unique
+  phone         String    @unique
+  name          String
+  type          UserType  // PROFESSIONAL, CLIENT, ADMIN
+  avatar        String?   // Supabase Storage URL
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  professional  Professional?
+  client        Client?
+  clientChats   Chat[] @relation("ClientChats")
+  professionalChats Chat[] @relation("ProfessionalChats")
+  messages      Message[]
+  reviews       Review[]
+  notifications Notification[]
+}
+
+model Professional {
+  id              String   @id @default(uuid()) @db.Uuid
+  userId          String   @unique @db.Uuid
+  user            User     @relation(fields: [userId], references: [id])
+  
+  // Profile
+  bio             String?
+  services        Service[] // Serviços oferecidos
+  skills          String[] // Tags: ["eletrica", "hidraulica", "pintura"]
+  experienceYears Int
+  portfolio       String[] // Supabase Storage URLs
+  
+  // Location
+  address         String
+  city            String
+  state           String
+  zipCode         String
+  latitude        Float
+  longitude       Float
+  
+  // Business
+  document        String   @unique // CPF/CNPJ
+  isActive        Boolean  @default(false)
+  subscription    Subscription?
+  
+  // Stats
+  rating          Float    @default(0)
+  reviewCount     Int      @default(0)
+  completedJobs   Int      @default(0)
+  
+  jobs            Job[]
+  availability    Availability[]
+}
+
+model Client {
+  id          String   @id @default(uuid()) @db.Uuid
+  userId      String   @unique @db.Uuid
+  user        User     @relation(fields: [userId], references: [id])
+  
+  address     String?
+  city        String?
+  state       String?
+  latitude    Float?
+  longitude   Float?
+  
+  jobs        Job[]
+}
+
+// Services Catalog
+model Service {
+  id              String   @id @default(uuid()) @db.Uuid
+  name            String   // "Reparos Elétricos"
+  slug            String   @unique
+  description     String
+  category        String   // "reparos", "pintura", "jardinagem"
+  icon            String   // Lucide icon name
+  basePrice       Float?   // Preço sugerido
+  
+  professionals   Professional[]
+  jobs            Job[]
+}
+
+// Jobs/Services Requests
+model Job {
+  id              String      @id @default(uuid()) @db.Uuid
+  
+  clientId        String      @db.Uuid
+  client          Client      @relation(fields: [clientId], references: [id])
+  
+  professionalId  String?     @db.Uuid
+  professional    Professional? @relation(fields: [professionalId], references: [id])
+  
+  serviceId       String      @db.Uuid
+  service         Service     @relation(fields: [serviceId], references: [id])
+  
+  title           String
+  description     String
+  
+  // Location
+  address         String
+  city            String
+  state           String
+  latitude        Float
+  longitude       Float
+  
+  // Job Details
+  status          JobStatus   @default(PENDING)
+  urgency         Urgency     @default(NORMAL)
+  proposedPrice   Float?
+  finalPrice      Float?
+  
+  // Scheduling
+  preferredDate   DateTime?
+  scheduledDate   DateTime?
+  completedAt     DateTime?
+  
+  // Payment
+  commissionPaid  Boolean     @default(false)
+  commissionAmount Float?
+  
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  
+  chat            Chat?
+  review          Review?
+}
+
+// Chat System
+model Chat {
+  id              String    @id @default(uuid()) @db.Uuid
+  jobId           String    @unique @db.Uuid
+  job             Job       @relation(fields: [jobId], references: [id])
+  
+  clientId        String    @db.Uuid
+  client          User      @relation("ClientChats", fields: [clientId], references: [id])
+  
+  professionalId  String    @db.Uuid
+  professional    User      @relation("ProfessionalChats", fields: [professionalId], references: [id])
+  
+  messages        Message[]
+  isActive        Boolean   @default(true)
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Message {
+  id          String   @id @default(uuid()) @db.Uuid
+  chatId      String   @db.Uuid
+  chat        Chat     @relation(fields: [chatId], references: [id])
+  
+  senderId    String   @db.Uuid
+  sender      User     @relation(fields: [senderId], references: [id])
+  
+  content     String
+  type        MessageType @default(TEXT)
+  isRead      Boolean     @default(false)
+  
+  createdAt   DateTime @default(now())
+}
+
+// Subscription & Payments
+model Subscription {
+  id                  String   @id @default(uuid()) @db.Uuid
+  professionalId      String   @unique @db.Uuid
+  professional        Professional @relation(fields: [professionalId], references: [id])
+  
+  status              SubscriptionStatus @default(INACTIVE)
+  planType            PlanType           @default(BASIC)
+  
+  // Manual Payment Tracking
+  lastPaymentDate     DateTime?
+  nextPaymentDate     DateTime?
+  paymentProof        String?    // Supabase Storage URL (comprovante PIX)
+  
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+// Reviews & Ratings
+model Review {
+  id              String   @id @default(uuid()) @db.Uuid
+  jobId           String   @unique @db.Uuid
+  job             Job      @relation(fields: [jobId], references: [id])
+  
+  reviewerId      String   @db.Uuid
+  reviewer        User     @relation(fields: [reviewerId], references: [id])
+  
+  professionalId  String   @db.Uuid
+  
+  rating          Int      // 1-5
+  comment         String?
+  
+  createdAt       DateTime @default(now())
+}
+
+// Availability Schedule
+model Availability {
+  id              String   @id @default(uuid()) @db.Uuid
+  professionalId  String   @db.Uuid
+  professional    Professional @relation(fields: [professionalId], references: [id])
+  
+  dayOfWeek       Int      // 0-6 (Sunday-Saturday)
+  startTime       String   // "08:00"
+  endTime         String   // "18:00"
+  isAvailable     Boolean  @default(true)
+}
+
+// Notifications
+model Notification {
+  id          String   @id @default(uuid()) @db.Uuid
+  userId      String   @db.Uuid
+  user        User     @relation(fields: [userId], references: [id])
+  
+  type        NotificationType
+  title       String
+  body        String
+  data        Json?    // Additional payload
+  
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+// Enums
+enum UserType {
+  PROFESSIONAL
+  CLIENT
+  ADMIN
+}
+
+enum JobStatus {
+  PENDING       // Aguardando profissional aceitar
+  ACCEPTED      // Profissional aceitou
+  IN_PROGRESS   // Serviço em andamento
+  COMPLETED     // Serviço concluído
+  CANCELLED     // Cancelado
+}
+
+enum Urgency {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  LOCATION
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  INACTIVE
+  PAST_DUE
+  CANCELLED
+}
+
+enum PlanType {
+  BASIC
+  PREMIUM
+}
+
+enum NotificationType {
+  NEW_JOB
+  JOB_ACCEPTED
+  NEW_MESSAGE
+  SUBSCRIPTION_EXPIRING
+  PAYMENT_RECEIVED
+  REVIEW_RECEIVED
+}
