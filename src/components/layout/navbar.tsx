@@ -16,18 +16,18 @@ export function Navbar() {
   ]
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#F5F0E8] border-b-[3px] border-[#1A1A1A]">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#F5E6D3]/80 backdrop-blur-md border-b-2 border-[#4A3728]/20">
       <div className="container mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-[#FF6B00] border-[3px] border-[#1A1A1A] flex items-center justify-center shadow-[4px_4px_0_#1A1A1A] group-hover:shadow-[6px_6px_0_#1A1A1A] group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200">
-              <Hammer className="w-5 h-5 text-white" strokeWidth={2.5} />
+            <div className="w-12 h-12 bg-[#E07856] rounded-full flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+              <Hammer className="w-6 h-6 text-white" strokeWidth={2} />
             </div>
             <div className="hidden sm:block">
-              <span className="font-black text-lg uppercase tracking-tight text-[#1A1A1A] block leading-none">
+              <span className="font-serif font-bold text-xl text-[#4A3728] block leading-none">
                 Portal Jurandir
-                <span className="block text-xs font-bold text-[#FF6B00] mt-0.5 tracking-widest">MARIDO DE ALUGUEL</span>
+                <span className="block text-xs font-medium text-[#4A3728]/70 mt-1 tracking-wide">Marido de Aluguel</span>
               </span>
             </div>
           </Link>
@@ -38,20 +38,22 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="font-bold text-[#1A1A1A] hover:text-[#FF6B00] uppercase text-sm tracking-wide transition-colors relative group"
+                className="font-semibold text-[#4A3728] hover:text-[#E07856] text-sm transition-colors relative group"
               >
                 {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FF6B00] group-hover:w-full transition-all duration-200" />
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#E07856] group-hover:w-full transition-all duration-200" />
               </Link>
             ))}
           </div>
 
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-4">
-            <Button variant="ghost" size="sm" className="text-sm">
-              <User className="w-4 h-4 mr-2" />
-              Entrar
-            </Button>
+            <Link href="/login">
+              <Button variant="ghost" size="sm" className="text-sm">
+                <User className="w-4 h-4 mr-2" />
+                Entrar
+              </Button>
+            </Link>
             <Button size="sm" className="text-sm">
               Cadastrar
             </Button>
@@ -87,9 +89,11 @@ export function Navbar() {
                 </Link>
               ))}
               <div className="flex flex-col gap-3 pt-4">
-                <Button variant="outline" size="lg" className="w-full justify-center">
-                  Entrar
-                </Button>
+                <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
+                  <Button variant="outline" size="lg" className="w-full justify-center">
+                    Entrar
+                  </Button>
+                </Link>
                 <Button size="lg" className="w-full justify-center">
                   Cadastrar
                 </Button>

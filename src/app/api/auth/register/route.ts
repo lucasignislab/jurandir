@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     const validatedData = registerSchema.parse(body)
 
     // Create user
-    const user = await prisma.user.create({
+    const user = await prisma.public_users.create({
       data: {
         id: validatedData.id,
         email: validatedData.email,
@@ -28,23 +28,23 @@ export async function POST(request: Request) {
 
     // Create client or professional profile based on type
     if (validatedData.type === 'CLIENT') {
-      await prisma.client.create({
+      await prisma.clients.create({
         data: {
-          userId: user.id,
+          user_id: user.id,
         },
       })
     } else if (validatedData.type === 'PROFESSIONAL') {
-      await prisma.professional.create({
+      await prisma.professionals.create({
         data: {
-          userId: user.id,
+          user_id: user.id,
           address: '',
           city: '',
           state: '',
-          zipCode: '',
+          zip_code: '',
           latitude: 0,
           longitude: 0,
           document: '',
-          experienceYears: 0,
+          experience_years: 0,
           skills: [],
           portfolio: [],
         },

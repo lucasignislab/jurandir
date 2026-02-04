@@ -1,0 +1,167 @@
+/* ========================================
+   ORGANIC WARM DESIGN SYSTEM
+   Portal Jurandir - Marido de Aluguel
+   ======================================== */
+
+:root {
+    /* === COLORS === */
+
+    /* Primary Palette */
+    --color-terracotta: #E07856;
+    --color-olive: #6B8E23;
+    --color-beige: #F5E6D3;
+    --color-brown: #4A3728;
+
+    /* Semantic Colors */
+    --color-primary: var(--color-terracotta);
+    --color-secondary: var(--color-olive);
+    --color-background: var(--color-beige);
+    --color-text: var(--color-brown);
+    --color-text-light: rgba(74, 55, 40, 0.7);
+
+    /* UI Colors */
+    --color-card-bg: rgba(255, 255, 255, 0.6);
+    --color-border: rgba(74, 55, 40, 0.1);
+    --color-hover: rgba(224, 120, 86, 0.1);
+
+    /* === SHADOWS === */
+
+    /* Soft shadows with blur - NO OFFSET */
+    --shadow-sm: 0 1px 3px rgba(74, 55, 40, 0.12);
+    --shadow-md: 0 4px 12px rgba(74, 55, 40, 0.15);
+    --shadow-lg: 0 8px 24px rgba(74, 55, 40, 0.18);
+    --shadow-xl: 0 16px 40px rgba(74, 55, 40, 0.2);
+
+    /* Colored shadows for special elements */
+    --shadow-terracotta: 0 8px 24px rgba(224, 120, 86, 0.3);
+    --shadow-olive: 0 8px 24px rgba(107, 142, 35, 0.3);
+
+    /* === BORDER RADIUS === */
+
+    /* Organic rounded corners */
+    --radius-sm: 16px;
+    --radius-md: 24px;
+    --radius-lg: 32px;
+    --radius-xl: 40px;
+    --radius-full: 9999px;
+
+    /* === SPACING === */
+
+    --spacing-xs: 0.5rem;
+    /* 8px */
+    --spacing-sm: 1rem;
+    /* 16px */
+    --spacing-md: 1.5rem;
+    /* 24px */
+    --spacing-lg: 2rem;
+    /* 32px */
+    --spacing-xl: 3rem;
+    /* 48px */
+    --spacing-2xl: 4rem;
+    /* 64px */
+
+    /* === TYPOGRAPHY === */
+
+    /* Font Families */
+    --font-serif: Georgia, 'Times New Roman', serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+
+    /* Font Sizes */
+    --text-xs: 0.75rem;
+    /* 12px */
+    --text-sm: 0.875rem;
+    /* 14px */
+    --text-base: 1rem;
+    /* 16px */
+    --text-lg: 1.125rem;
+    /* 18px */
+    --text-xl: 1.25rem;
+    /* 20px */
+    --text-2xl: 1.5rem;
+    /* 24px */
+    --text-3xl: 1.875rem;
+    /* 30px */
+    --text-4xl: 2.25rem;
+    /* 36px */
+    --text-5xl: 3rem;
+    /* 48px */
+    --text-6xl: 3.75rem;
+    /* 60px */
+
+    /* Font Weights */
+    --weight-normal: 400;
+    --weight-medium: 500;
+    --weight-semibold: 600;
+    --weight-bold: 700;
+
+    /* === TRANSITIONS === */
+
+    --transition-fast: 150ms ease;
+    --transition-base: 300ms ease;
+    --transition-slow: 500ms ease;
+
+    /* === Z-INDEX === */
+
+    --z-base: 1;
+    --z-dropdown: 10;
+    --z-sticky: 100;
+    --z-fixed: 200;
+    --z-modal: 1000;
+    --z-tooltip: 2000;
+}
+
+/* === UTILITY CLASSES === */
+
+.bg-organic {
+    background-color: var(--color-background);
+}
+
+.text-organic {
+    color: var(--color-text);
+}
+
+.shadow-organic-sm {
+    box-shadow: var(--shadow-sm);
+}
+
+.shadow-organic-md {
+    box-shadow: var(--shadow-md);
+}
+
+.shadow-organic-lg {
+    box-shadow: var(--shadow-lg);
+}
+
+.shadow-organic-xl {
+    box-shadow: var(--shadow-xl);
+}
+
+.rounded-organic-sm {
+    border-radius: var(--radius-sm);
+}
+
+.rounded-organic-md {
+    border-radius: var(--radius-md);
+}
+
+.rounded-organic-lg {
+    border-radius: var(--radius-lg);
+}
+
+.rounded-organic-xl {
+    border-radius: var(--radius-xl);
+}
+
+/* === ORGANIC SHAPES === */
+
+.shape-organic-blob-1 {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}
+
+.shape-organic-blob-2 {
+    border-radius: 40% 60% 70% 30% / 40% 70% 30% 60%;
+}
+
+.shape-organic-blob-3 {
+    border-radius: 50% 50% 40% 60% / 50% 60% 40% 50%;
+}

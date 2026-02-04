@@ -11,14 +11,14 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ({ className, variant = "default", shadow = "default", border = true, ...props }, ref) => {
     const variants = {
       default: "bg-white",
-      secondary: "bg-[#F5F0E8]",
-      accent: "bg-[#FF6B00] text-white",
+      secondary: "bg-[#F5E6D3]",
+      accent: "bg-[#E07856] text-white",
     }
 
     const shadows = {
-      sm: "shadow-[4px_4px_0_#1A1A1A]",
-      default: "shadow-[8px_8px_0_#1A1A1A]",
-      lg: "shadow-[12px_12px_0_#1A1A1A]",
+      sm: "shadow-sm",
+      default: "shadow-md",
+      lg: "shadow-lg",
       none: "",
     }
 
@@ -26,12 +26,12 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       <div
         ref={ref}
         className={cn(
-          "rounded-sm",
+          "rounded-3xl",
           variants[variant],
           shadows[shadow],
-          border && "border-[3px] border-[#1A1A1A]",
+          border && "border-2 border-[#4A3728]/10",
           "transition-all duration-200",
-          "hover:shadow-[12px_12px_0_#1A1A1A] hover:-translate-x-1 hover:-translate-y-1",
+          "hover:shadow-lg",
           className
         )}
         {...props}
@@ -60,7 +60,7 @@ const CardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      "text-2xl font-black leading-none tracking-tight uppercase",
+      "text-2xl font-bold leading-none tracking-tight text-[#4A3728]",
       className
     )}
     {...props}
@@ -74,7 +74,7 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-base text-[#666666] font-medium", className)}
+    className={cn("text-base text-[#4A3728]/70 font-medium", className)}
     {...props}
   />
 ))

@@ -4,19 +4,19 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm text-sm font-black uppercase tracking-wide transition-all duration-200 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E07856]/50 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bg-[#1A1A1A] text-white border-[3px] border-[#1A1A1A] shadow-[6px_6px_0_#1A1A1A] hover:shadow-[8px_8px_0_#FF6B00] hover:border-[#FF6B00] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-none active:translate-x-1 active:translate-y-1",
+          "bg-[#E07856] text-white rounded-full shadow-lg hover:shadow-xl hover:bg-[#D66A48] active:scale-95",
         secondary:
-          "bg-[#FF6B00] text-white border-[3px] border-[#1A1A1A] shadow-[6px_6px_0_#1A1A1A] hover:shadow-[8px_8px_0_#FFD700] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-none active:translate-x-1 active:translate-y-1",
+          "bg-[#6B8E23] text-white rounded-full shadow-lg hover:shadow-xl hover:bg-[#5A7A1E] active:scale-95",
         outline:
-          "bg-white text-[#1A1A1A] border-[3px] border-[#1A1A1A] shadow-[6px_6px_0_#1A1A1A] hover:bg-[#1A1A1A] hover:text-white hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-none active:translate-x-1 active:translate-y-1",
+          "bg-white text-[#4A3728] border-2 border-[#4A3728]/30 rounded-full shadow-sm hover:bg-[#F5E6D3] hover:border-[#4A3728]/50 hover:shadow-md active:scale-95",
         accent:
-          "bg-[#FFD700] text-[#1A1A1A] border-[3px] border-[#1A1A1A] shadow-[6px_6px_0_#1A1A1A] hover:shadow-[8px_8px_0_#FF6B00] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-none active:translate-x-1 active:translate-y-1",
-        ghost: "hover:bg-[#F5F0E8] text-[#1A1A1A]",
+          "bg-white text-[#E07856] border-2 border-[#E07856]/30 rounded-full shadow-md hover:bg-[#E07856]/10 hover:border-[#E07856] hover:shadow-lg active:scale-95",
+        ghost: "rounded-full hover:bg-[#F5E6D3]/50 text-[#4A3728]",
       },
       size: {
         default: "h-12 px-6 py-3 text-sm",
@@ -34,7 +34,7 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  VariantProps<typeof buttonVariants> {
   asChild?: boolean
 }
 

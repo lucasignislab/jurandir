@@ -9,7 +9,7 @@ import { CTASection } from "@/components/landing/cta-section"
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#F5F0E8]">
+    <main className="min-h-screen bg-[#F5E6D3]">
       <Navbar />
       <div className="pt-20">
         <HeroSection />

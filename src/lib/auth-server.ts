@@ -25,11 +25,11 @@ export async function getCurrentUser() {
 
     if (!user) return null
 
-    const dbUser = await prisma.user.findUnique({
+    const dbUser = await prisma.public_users.findUnique({
         where: { id: user.id },
         include: {
-            professional: true,
-            client: true,
+            professionals: true,
+            clients: true,
         }
     })
 

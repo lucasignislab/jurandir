@@ -30,26 +30,24 @@ export async function updateProfessionalProfile(data: z.infer<typeof profileSche
 
         // Atualiza User e Professional em uma transação
         await prisma.$transaction([
-            prisma.user.update({
+            prisma.public_users.update({
                 where: { id: user.id },
                 data: {
                     name: validated.name,
                     phone: validated.phone,
                 },
             }),
-            prisma.professional.update({
-                where: { userId: user.id },
+            prisma.professionals.update({
+                where: { user_id: user.id },
                 data: {
                     bio: validated.bio,
-                    experienceYears: validated.experienceYears,
+                    experience_years: validated.experienceYears,
                     skills: validated.skills,
                     address: validated.address,
                     city: validated.city,
                     state: validated.state,
-                    zipCode: validated.zipCode,
+                    zip_code: validated.zipCode,
                     document: validated.document,
-                    // Por enquanto, não atualizamos lat/lng aqui, 
-                    // mas em uma versão futura poderíamos integrar com API de mapa
                 },
             }),
         ])

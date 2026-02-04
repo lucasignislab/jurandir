@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { supabase } from '@/lib/supabase'
+import { createBrowserClient } from '@supabase/ssr'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -17,6 +17,11 @@ export default function LoginPage() {
     setError(null)
 
     try {
+      const supabase = createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      )
+
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -106,3 +111,4 @@ export default function LoginPage() {
     </div>
   )
 }
+
